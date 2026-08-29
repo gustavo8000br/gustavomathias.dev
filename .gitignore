@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────────────
+#  gustavomathias.dev — .gitignore
+# ─────────────────────────────────────────────────────────────
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+
+# Next.js / build output
+/.next/
+/out/
+/build
+/dist
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment & secrets
+.env
+.env*.local
+*.pem
+*.key
+
+# Vercel
+.vercel
+
+# Testing / coverage
+/coverage
+
+# Sanity
+/sanity/dist
+/sanity/.sanity
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+
+# ─────────────────────────────────────────────────────────────
+#  Ferramental de framework / assistentes de IA — NÃO versionar
+#  neste repositório (é um site, não o framework que o gerou).
+# ─────────────────────────────────────────────────────────────
+/.aiox-core/
+/.aiox/
+/.claude/
+/.antigravity/
+/.codex/
+/.cursor/
+/.gemini/
+/.kimi/
+/.github/agents/
+/.github/copilot-instructions.md
+/AGENTS.md
+/.env.example
