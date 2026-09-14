@@ -56,10 +56,22 @@ class ResumePdf {
   private addPage() {
     if (this.commands.length) this.pages.push(this.commands.join("\n"));
 
-    this.commands = ["0.1 0.72 0.68 rg", `0 ${pageHeight - 10} ${pageWidth} 10 re f`];
+    this.commands = [
+      "0.1 0.72 0.68 rg",
+      `0 ${pageHeight - 10} ${pageWidth} 10 re f`,
+    ];
     this.y = pageHeight - 54;
     this.text("F1", 8, 0.35, 0.4, 0.5, margin, this.y, "gustavomathias.dev");
-    this.text("F1", 8, 0.35, 0.4, 0.5, pageWidth - 130, this.y, "Currículo atualizado");
+    this.text(
+      "F1",
+      8,
+      0.35,
+      0.4,
+      0.5,
+      pageWidth - 130,
+      this.y,
+      "Currículo atualizado",
+    );
     this.y -= 28;
   }
 
@@ -97,7 +109,16 @@ class ResumePdf {
   section(value: string) {
     this.ensureSpace(28);
     this.commands.push("0.1 0.72 0.68 rg", `${margin} ${this.y - 5} 22 2 re f`);
-    this.text("F2", 9, 0.1, 0.72, 0.68, margin + 30, this.y - 8, value.toUpperCase());
+    this.text(
+      "F2",
+      9,
+      0.1,
+      0.72,
+      0.68,
+      margin + 30,
+      this.y - 8,
+      value.toUpperCase(),
+    );
     this.y -= 28;
   }
 
@@ -106,7 +127,16 @@ class ResumePdf {
     this.ensureSpace(lines.length * 14 + 6);
 
     for (const line of lines) {
-      this.text(emphasis ? "F2" : "F1", 9.5, 0.12, 0.16, 0.25, margin, this.y, line);
+      this.text(
+        emphasis ? "F2" : "F1",
+        9.5,
+        0.12,
+        0.16,
+        0.25,
+        margin,
+        this.y,
+        line,
+      );
       this.y -= 14;
     }
 
@@ -149,8 +179,10 @@ class ResumePdf {
     for (const [index, content] of this.pages.entries()) {
       const pageId = pageObjectIds[index];
       const contentId = contentObjectIds[index];
-      objects[pageId - 1] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentId} 0 R >>`;
-      objects[contentId - 1] = `<< /Length ${toLatin1(content).length} >>\nstream\n${content}\nendstream`;
+      objects[pageId - 1] =
+        `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentId} 0 R >>`;
+      objects[contentId - 1] =
+        `<< /Length ${toLatin1(content).length} >>\nstream\n${content}\nendstream`;
     }
 
     let pdf = "%PDF-1.4\n%PDF resume\n";
@@ -163,10 +195,15 @@ class ResumePdf {
 
     const xrefOffset = toLatin1(pdf).length;
     pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
-    pdf += offsets.slice(1).map((offset) => `${String(offset).padStart(10, "0")} 00000 n \n`).join("");
+    pdf += offsets
+      .slice(1)
+      .map((offset) => `${String(offset).padStart(10, "0")} 00000 n \n`)
+      .join("");
     pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
 
-    return Uint8Array.from(toLatin1(pdf), (character) => character.charCodeAt(0));
+    return Uint8Array.from(toLatin1(pdf), (character) =>
+      character.charCodeAt(0),
+    );
   }
 }
 
@@ -175,7 +212,9 @@ export function createResumePdf(generatedAt: Date): Uint8Array {
 
   pdf.title(profile.name);
   pdf.subtitle(profile.role);
-  pdf.metadata(`${profile.location} · ${profile.email} · ${contact.linkedin} · ${contact.github}`);
+  pdf.metadata(
+    `${profile.location} · ${profile.email} · ${contact.linkedin} · ${contact.github}`,
+  );
 
   pdf.section("Perfil");
   pdf.paragraph(profile.description);
@@ -199,7 +238,11 @@ export function createResumePdf(generatedAt: Date): Uint8Array {
   }
 
   pdf.section("Idiomas");
-  pdf.paragraph(languages.map((language) => `${language.name} (${language.level})`).join(" · "));
+  pdf.paragraph(
+    languages
+      .map((language) => `${language.name} (${language.level})`)
+      .join(" · "),
+  );
 
   return pdf.finish();
 }
