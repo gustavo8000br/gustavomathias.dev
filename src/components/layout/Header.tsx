@@ -12,9 +12,6 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link className="brand" href="#top">
-          Início
-        </Link>
         <nav aria-label="Navegação principal">
           <ul className="nav-list">
             {navigation.map((item) => (

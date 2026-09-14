@@ -87,7 +87,7 @@ a {
   justify-content: space-between;
   gap: 1rem;
 }
-.brand {
+/* .brand {
   display: flex;
   align-items: baseline;
   gap: 0.4rem;
@@ -112,7 +112,7 @@ a {
   color: var(--color-accent);
   border-radius: 8px;
   font-size: 0.65rem;
-}
+} */
 .nav-list {
   display: flex;
   align-items: center;
@@ -1222,12 +1222,12 @@ h1::first-line {
     width: max-content;
     margin-left: auto;
   }
-  .brand-name {
+  /* .brand-name {
     max-width: 12rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
+  } */
   .hero-section {
     min-height: 46rem;
     padding-top: 1.5rem;

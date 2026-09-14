@@ -41,7 +41,7 @@ export const stack: readonly StackGroup[] = [
     label: "CMS & Web",
     description: "Experiência anterior em desenvolvimento web sob demanda.",
     accent: "accent",
-    items: ["WordPress", "Elementor", "WooCommerce"],
+    items: ["Payload CMS", "Elementor", "WordPress", "WooCommerce"],
   },
   {
     id: "engineering",
