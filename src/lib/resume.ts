@@ -5,95 +5,201 @@ import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { stack } from "@/content/stack";
 
-function escapeHtml(value: string): string {
-  return value.replace(/[&<>'"]/g, (character) => {
-    const entities: Record<string, string> = {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      "'": "&#39;",
-      '"': "&quot;",
-    };
+const pageWidth = 595;
+const pageHeight = 842;
+const margin = 50;
+const maxLineLength = 88;
 
-    return entities[character];
-  });
+function toLatin1(value: string): string {
+  return value
+    .replace(/—/g, "-")
+    .replace(/’/g, "'")
+    .replace(/“/g, '"')
+    .replace(/”/g, '"')
+    .replace(/[^\x00-\xFF]/g, "?");
 }
 
-function list(items: readonly string[]): string {
-  return items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+function escapePdf(value: string): string {
+  return toLatin1(value).replace(/[\\()]/g, "\\$&");
 }
 
-export function createResumeDocument(generatedAt: Date): string {
-  const generatedDate = new Intl.DateTimeFormat("pt-BR", {
-    dateStyle: "long",
-  }).format(generatedAt);
+function wrapText(value: string): string[] {
+  const words = value.split(/\s+/);
+  const lines: string[] = [];
+  let line = "";
 
-  return `<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Currículo — ${escapeHtml(profile.name)}</title>
-  <style>
-    @page { margin: 18mm; }
-    * { box-sizing: border-box; }
-    body { margin: 0; color: #172033; font: 10.5pt/1.55 Arial, sans-serif; }
-    h1, h2, h3, p { margin-top: 0; }
-    header { border-bottom: 3px solid #19b8ab; margin-bottom: 22px; padding-bottom: 16px; }
-    h1 { font-size: 27pt; letter-spacing: -0.04em; margin-bottom: 2px; }
-    .role { color: #19b8ab; font-size: 12pt; font-weight: 700; margin-bottom: 10px; }
-    .contact { color: #53617b; font-size: 9pt; }
-    section { break-inside: avoid; margin-bottom: 18px; }
-    h2 { color: #19b8ab; font-size: 9pt; letter-spacing: .12em; margin-bottom: 8px; text-transform: uppercase; }
-    h3 { font-size: 11pt; margin-bottom: 3px; }
-    .meta { color: #53617b; font-size: 9pt; }
-    .grid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    ul { margin: 0; padding-left: 18px; }
-    .tags { display: flex; flex-wrap: wrap; gap: 5px; list-style: none; padding: 0; }
-    .tags li { background: #e8f8f6; border-radius: 99px; padding: 3px 7px; }
-    footer { border-top: 1px solid #dbe2ef; color: #64748b; font-size: 8pt; padding-top: 10px; }
-    @media print { a { color: inherit; text-decoration: none; } }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>${escapeHtml(profile.name)}</h1>
-    <p class="role">${escapeHtml(profile.role)}</p>
-    <p class="contact">${escapeHtml(profile.location)} · ${escapeHtml(profile.email)} · ${escapeHtml(contact.linkedin)} · ${escapeHtml(contact.github)}</p>
-  </header>
-  <section>
-    <h2>Perfil</h2>
-    <p>${escapeHtml(profile.description)}</p>
-  </section>
-  <section>
-    <h2>Formação</h2>
-    ${education
-      .map(
-        (item) => `<h3>${escapeHtml(item.course)}</h3><p class="meta">${escapeHtml(item.institution)} · ${escapeHtml(item.modality)} · ${escapeHtml(item.period)}</p>`,
-      )
-      .join("")}
-  </section>
-  <section>
-    <h2>Competências</h2>
-    <div class="grid">${stack
-      .map(
-        (group) => `<div><h3>${escapeHtml(group.label)}</h3><ul class="tags">${list(group.items)}</ul></div>`,
-      )
-      .join("")}</div>
-  </section>
-  <section>
-    <h2>Projetos selecionados</h2>
-    ${projects
-      .map(
-        (project) => `<h3>${escapeHtml(project.title)}</h3><p>${escapeHtml(project.summary)}</p><p class="meta">${escapeHtml(project.role)} · ${escapeHtml(project.technologies.join(", "))}</p>`,
-      )
-      .join("")}
-  </section>
-  <section>
-    <h2>Idiomas</h2>
-    <p>${languages.map((language) => `${escapeHtml(language.name)} (${escapeHtml(language.level)})`).join(" · ")}</p>
-  </section>
-  <footer>Currículo gerado automaticamente em ${escapeHtml(generatedDate)} a partir de gustavomathias.dev.</footer>
-</body>
-</html>`;
+  for (const word of words) {
+    const nextLine = line ? `${line} ${word}` : word;
+
+    if (nextLine.length > maxLineLength && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = nextLine;
+    }
+  }
+
+  if (line) lines.push(line);
+
+  return lines;
+}
+
+class ResumePdf {
+  private pages: string[] = [];
+  private commands: string[] = [];
+  private y = 0;
+
+  constructor(private readonly generatedAt: Date) {
+    this.addPage();
+  }
+
+  private addPage() {
+    if (this.commands.length) this.pages.push(this.commands.join("\n"));
+
+    this.commands = ["0.1 0.72 0.68 rg", `0 ${pageHeight - 10} ${pageWidth} 10 re f`];
+    this.y = pageHeight - 54;
+    this.text("F1", 8, 0.35, 0.4, 0.5, margin, this.y, "gustavomathias.dev");
+    this.text("F1", 8, 0.35, 0.4, 0.5, pageWidth - 130, this.y, "Currículo atualizado");
+    this.y -= 28;
+  }
+
+  private text(
+    font: "F1" | "F2",
+    size: number,
+    red: number,
+    green: number,
+    blue: number,
+    x: number,
+    y: number,
+    value: string,
+  ) {
+    this.commands.push(
+      `BT /${font} ${size} Tf ${red} ${green} ${blue} rg 1 0 0 1 ${x} ${y} Tm (${escapePdf(value)}) Tj ET`,
+    );
+  }
+
+  private ensureSpace(height: number) {
+    if (this.y - height < 62) this.addPage();
+  }
+
+  title(value: string) {
+    this.ensureSpace(38);
+    this.text("F2", 24, 0.08, 0.12, 0.2, margin, this.y, value);
+    this.y -= 30;
+  }
+
+  subtitle(value: string) {
+    this.ensureSpace(24);
+    this.text("F2", 11, 0.1, 0.72, 0.68, margin, this.y, value);
+    this.y -= 20;
+  }
+
+  section(value: string) {
+    this.ensureSpace(28);
+    this.commands.push("0.1 0.72 0.68 rg", `${margin} ${this.y - 5} 22 2 re f`);
+    this.text("F2", 9, 0.1, 0.72, 0.68, margin + 30, this.y - 8, value.toUpperCase());
+    this.y -= 28;
+  }
+
+  paragraph(value: string, emphasis = false) {
+    const lines = wrapText(value);
+    this.ensureSpace(lines.length * 14 + 6);
+
+    for (const line of lines) {
+      this.text(emphasis ? "F2" : "F1", 9.5, 0.12, 0.16, 0.25, margin, this.y, line);
+      this.y -= 14;
+    }
+
+    this.y -= 6;
+  }
+
+  metadata(value: string) {
+    const lines = wrapText(value);
+    this.ensureSpace(lines.length * 12 + 5);
+
+    for (const line of lines) {
+      this.text("F1", 8.5, 0.35, 0.4, 0.5, margin, this.y, line);
+      this.y -= 12;
+    }
+
+    this.y -= 5;
+  }
+
+  finish(): Uint8Array {
+    const generatedDate = new Intl.DateTimeFormat("pt-BR", {
+      dateStyle: "long",
+    }).format(this.generatedAt);
+
+    this.commands.push(
+      "0.35 0.4 0.5 rg",
+      `BT /F1 7 Tf 1 0 0 1 ${margin} 30 Tm (${escapePdf(`Gerado automaticamente em ${generatedDate} a partir de gustavomathias.dev.`)}) Tj ET`,
+    );
+    this.pages.push(this.commands.join("\n"));
+
+    const pageCount = this.pages.length;
+    const pageObjectIds = this.pages.map((_, index) => 5 + index * 2);
+    const contentObjectIds = pageObjectIds.map((id) => id + 1);
+    const objects = [
+      "<< /Type /Catalog /Pages 2 0 R >>",
+      `<< /Type /Pages /Kids [${pageObjectIds.map((id) => `${id} 0 R`).join(" ")}] /Count ${pageCount} >>`,
+      "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+      "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>",
+    ];
+
+    for (const [index, content] of this.pages.entries()) {
+      const pageId = pageObjectIds[index];
+      const contentId = contentObjectIds[index];
+      objects[pageId - 1] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentId} 0 R >>`;
+      objects[contentId - 1] = `<< /Length ${toLatin1(content).length} >>\nstream\n${content}\nendstream`;
+    }
+
+    let pdf = "%PDF-1.4\n%PDF resume\n";
+    const offsets = [0];
+
+    for (const [index, object] of objects.entries()) {
+      offsets.push(toLatin1(pdf).length);
+      pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+    }
+
+    const xrefOffset = toLatin1(pdf).length;
+    pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+    pdf += offsets.slice(1).map((offset) => `${String(offset).padStart(10, "0")} 00000 n \n`).join("");
+    pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+
+    return Uint8Array.from(toLatin1(pdf), (character) => character.charCodeAt(0));
+  }
+}
+
+export function createResumePdf(generatedAt: Date): Uint8Array {
+  const pdf = new ResumePdf(generatedAt);
+
+  pdf.title(profile.name);
+  pdf.subtitle(profile.role);
+  pdf.metadata(`${profile.location} · ${profile.email} · ${contact.linkedin} · ${contact.github}`);
+
+  pdf.section("Perfil");
+  pdf.paragraph(profile.description);
+
+  pdf.section("Formação");
+  for (const item of education) {
+    pdf.paragraph(item.course, true);
+    pdf.metadata(`${item.institution} · ${item.modality} · ${item.period}`);
+  }
+
+  pdf.section("Competências");
+  for (const group of stack) {
+    pdf.paragraph(`${group.label}: ${group.items.join(", ")}`);
+  }
+
+  pdf.section("Projetos selecionados");
+  for (const project of projects) {
+    pdf.paragraph(project.title, true);
+    pdf.paragraph(project.summary);
+    pdf.metadata(`${project.role} · ${project.technologies.join(", ")}`);
+  }
+
+  pdf.section("Idiomas");
+  pdf.paragraph(languages.map((language) => `${language.name} (${language.level})`).join(" · "));
+
+  return pdf.finish();
 }

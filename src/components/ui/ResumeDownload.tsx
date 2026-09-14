@@ -2,17 +2,17 @@
 
 import { Download } from "lucide-react";
 
-import { createResumeDocument } from "@/lib/resume";
+import { createResumePdf } from "@/lib/resume";
 
 export function ResumeDownload() {
   function downloadResume() {
-    const resumeDocument = createResumeDocument(new Date());
-    const blob = new Blob([resumeDocument], { type: "text/html;charset=utf-8" });
+    const resume = createResumePdf(new Date());
+    const blob = new Blob([resume], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
     const link = window.document.createElement("a");
 
     link.href = url;
-    link.download = "curriculo-gustavo-mathias-rocha.html";
+    link.download = "curriculo-gustavo-mathias-rocha.pdf";
     window.document.body.append(link);
     link.click();
     link.remove();
@@ -25,7 +25,7 @@ export function ResumeDownload() {
       type="button"
       onClick={downloadResume}
     >
-      Baixar currículo <Download size={18} aria-hidden="true" />
+      Baixar currículo em PDF <Download size={18} aria-hidden="true" />
     </button>
   );
 }
