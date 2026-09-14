@@ -2,6 +2,7 @@ import { ArrowDown, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { ProfilePhoto } from "@/components/ui/ProfilePhoto";
+import { ResumeDownload } from "@/components/ui/ResumeDownload";
 import { profile } from "@/content/profile";
 
 export function Hero() {
@@ -30,6 +31,8 @@ export function Hero() {
             <Link className="button button-secondary" href="#contato">
               Entrar em contato <ArrowDown size={18} aria-hidden="true" />
             </Link>
+
+            <ResumeDownload />
           </div>
         </div>
 
@@ -65,7 +68,8 @@ export function Hero() {
                 <span className="hero-index-label">portfólio pessoal</span>
 
                 <span className="hero-index-note">
-                  Interfaces claras, sistemas sustentáveis e atenção ao detalhe.
+                  Clareza na interface, qualidade no código e atenção ao
+                  detalhe.
                 </span>
               </span>
             </p>
@@ -75,7 +79,7 @@ export function Hero() {
         <ul className="hero-signals" aria-label="Áreas de atuação">
           <li>Arquitetura</li>
           <li>Interfaces</li>
-          <li>Continuidade</li>
+          <li>Qualidade</li>
         </ul>
       </div>
     </section>
