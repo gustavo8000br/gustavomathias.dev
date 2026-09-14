@@ -1,6 +1,7 @@
 import { Github, Linkedin, Mail, MessageCircle } from "lucide-react";
-import { contact } from "@/content/contact";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { contact } from "@/content/contact";
+
 const links = [
   {
     label: "E-mail",
@@ -41,14 +42,14 @@ export function Contact() {
           id="contato-title"
           index="06"
           label="contato"
-          title="Vamos conversar sobre o próximo problema."
+          title="Vamos transformar o próximo desafio em produto."
         />{" "}
         <div className="contact-layout">
           {" "}
           <p className="lead">
             {" "}
-            Se você procura alguém para construir, organizar ou evoluir um
-            produto web, meu inbox está aberto.{" "}
+            Precisa criar uma experiência digital, organizar uma base existente
+            ou evoluir um produto web? Vamos conversar.{" "}
           </p>{" "}
           <div className="contact-links">
             {" "}

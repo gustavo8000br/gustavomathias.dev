@@ -14,5 +14,8 @@
         "useMediaCaption": "off"
       }
     }
+  },
+  "files": {
+    "includes": ["**", "!**/.aiox-core", "!**/.aiox", "!.mcp.json"]
   }
 }
