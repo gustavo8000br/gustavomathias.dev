@@ -18,7 +18,7 @@ export function About() {
           </p>
           <p>
             Curso {education[0].course} na {education[0].institution}, na
-            modalidade {education[0].modality}, com conclusão prevista para
+            modalidade {education[0].modality}, com conclusão prevista para{" "}
             {education[0].period}.
           </p>
           <p>
