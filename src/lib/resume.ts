@@ -11,12 +11,15 @@ const margin = 50;
 const maxLineLength = 88;
 
 function toLatin1(value: string): string {
-  return value
+  const normalized = value
     .replace(/—/g, "-")
     .replace(/’/g, "'")
     .replace(/“/g, '"')
-    .replace(/”/g, '"')
-    .replace(/[^\x00-\xFF]/g, "?");
+    .replace(/”/g, '"');
+
+  return Array.from(normalized, (character) =>
+    (character.codePointAt(0) ?? 0) <= 0xff ? character : "?",
+  ).join("");
 }
 
 function escapePdf(value: string): string {
@@ -172,8 +175,8 @@ class ResumePdf {
     const objects = [
       "<< /Type /Catalog /Pages 2 0 R >>",
       `<< /Type /Pages /Kids [${pageObjectIds.map((id) => `${id} 0 R`).join(" ")}] /Count ${pageCount} >>`,
-      "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
-      "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>",
+      "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
+      "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>",
     ];
 
     for (const [index, content] of this.pages.entries()) {

@@ -7,7 +7,8 @@ import { createResumePdf } from "@/lib/resume";
 export function ResumeDownload() {
   function downloadResume() {
     const resume = createResumePdf(new Date());
-    const blob = new Blob([resume], { type: "application/pdf" });
+    const pdfBytes = new Uint8Array(resume);
+    const blob = new Blob([pdfBytes.buffer], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
     const link = window.document.createElement("a");
 

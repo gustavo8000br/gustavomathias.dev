@@ -11,9 +11,14 @@ describe("resume PDF", () => {
     const pdf = createResumePdf(new Date("2026-09-14T12:00:00Z"));
     const document = latin1Decoder.decode(pdf);
 
-    expect(document).toStartWith("%PDF-1.4");
+    expect(document.startsWith("%PDF-1.4")).toBe(true);
+    expect(document).toContain("/Encoding /WinAnsiEncoding");
     expect(document).toContain(profile.name);
-    expect(document).toContain(education[0].institution);
+    expect(document).toContain("São Paulo");
+    expect(document).toContain("aplicações");
+    expect(document).toContain(
+      education[0].institution.replace(/[()]/g, "\\$&"),
+    );
     expect(document).toContain(education[0].course);
     expect(document).toContain("Gerado automaticamente");
   });
