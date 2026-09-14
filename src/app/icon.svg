@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Marca de Gustavo Mathias Rocha</title>
+  <desc id="desc">Uma trajetória modular e ascendente que representa a evolução contínua de produtos web.</desc>
+  <rect width="128" height="128" rx="28" fill="#0A0E1A"/>
+  <path d="M26 94V72c0-6 5-11 11-11h17c6 0 11-5 11-11V35c0-6 5-11 11-11h16" fill="none" stroke="#38E0D0" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+  <path d="M75 24h18v18" fill="none" stroke="#B6F24A" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+  <circle cx="26" cy="94" r="8" fill="#A99DFF"/>
+  <circle cx="65" cy="50" r="6" fill="#38E0D0"/>
+</svg>

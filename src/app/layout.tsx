@@ -22,11 +22,11 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Gustavo Mathias | Desenvolvedor web Full Stack",
   description:
-    "Portfólio de Gustavo Mathias, desenvolvedor web Full Stack com foco em TypeScript, React, Next.js e Node.js.",
+    "Portfólio de Gustavo Mathias, desenvolvedor web Full Stack freelancer desde 2015, com foco em TypeScript, React, Next.js e Node.js.",
   metadataBase: new URL("https://gustavomathias.dev"),
   openGraph: {
     title: "Gustavo Mathias | Desenvolvedor web Full Stack",
-    description: "Arquitetura, qualidade e manutenção para produtos web.",
+    description: "Produtos web Full Stack: da interface à infraestrutura.",
     type: "website",
     locale: "pt_BR",
   },
@@ -35,8 +35,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${spaceGrotesk.variable} ${inter.variable} ${jetBrainsMono.variable}`}
       >
         {children}

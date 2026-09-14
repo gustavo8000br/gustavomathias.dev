@@ -1300,3 +1300,14 @@ h1::first-line {
     animation-duration: 1ms !important;
   }
 }
+
+.project-link-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
