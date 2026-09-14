@@ -63,8 +63,16 @@ Fluxo: `feat/* → (PR) → dev → (PR) → homologacao → (PR de promoção) 
 
 **Somente estas três branches são permanentes.** Branches de trabalho são
 efêmeras e **excluídas automaticamente no merge** (config do repositório
-`delete_branch_on_merge: true` + ruleset que restringe criação de branches fora
-dos prefixos permitidos).
+`delete_branch_on_merge: true`). As três permanentes são protegidas por ruleset
+(sem deleção, sem force-push, PR obrigatória).
+
+> **Nota (2026-08-29):** o padrão de nomes de branch
+> (`feat|fix|chore|docs|…/slug`) **não tem enforcement server-side** — regras de
+> *branch name pattern* exigem repositório de organização ou plano Team/Enterprise,
+> e este é repo de conta pessoal no plano Free. Fica como **convenção de
+> processo** (decisão do product owner: projeto tocado só por ele + assistente de
+> IA). Se no futuro houver mais colaboradores, avaliar (a) um job de CI que falha
+> em PR de branch fora do padrão ou (b) mover o repo para uma organização.
 
 ### Mecânica de CI (GitHub Actions)
 
