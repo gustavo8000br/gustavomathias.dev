@@ -2,6 +2,7 @@ import { ArrowDown, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { ProfilePhoto } from "@/components/ui/ProfilePhoto";
+import { ResumeDownload } from "@/components/ui/ResumeDownload";
 import { profile } from "@/content/profile";
 
 export function Hero() {
@@ -30,6 +31,8 @@ export function Hero() {
             <Link className="button button-secondary" href="#contato">
               Entrar em contato <ArrowDown size={18} aria-hidden="true" />
             </Link>
+
+            <ResumeDownload />
           </div>
         </div>
 

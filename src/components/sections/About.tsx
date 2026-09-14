@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { education } from "@/content/education";
 
 export function About() {
   return (
@@ -14,6 +15,11 @@ export function About() {
           <p className="lead">
             Atuo com desenvolvimento web sob demanda desde 2015, unindo visão de
             produto e execução técnica.
+          </p>
+          <p>
+            Curso {education[0].course} na {education[0].institution}, na
+            modalidade {education[0].modality}, com conclusão prevista para
+            {education[0].period}.
           </p>
           <p>
             Antes de escolher ferramentas, entendo o contexto, os objetivos e as
