@@ -65,7 +65,8 @@ export function Hero() {
                 <span className="hero-index-label">portfólio pessoal</span>
 
                 <span className="hero-index-note">
-                  Interfaces claras, sistemas sustentáveis e atenção ao detalhe.
+                  Clareza na interface, qualidade no código e atenção ao
+                  detalhe.
                 </span>
               </span>
             </p>
@@ -75,7 +76,7 @@ export function Hero() {
         <ul className="hero-signals" aria-label="Áreas de atuação">
           <li>Arquitetura</li>
           <li>Interfaces</li>
-          <li>Continuidade</li>
+          <li>Qualidade</li>
         </ul>
       </div>
     </section>

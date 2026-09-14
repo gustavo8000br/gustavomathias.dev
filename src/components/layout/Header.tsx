@@ -4,7 +4,7 @@ import { profile } from "@/content/profile";
 
 const navigation = [
   { href: "#sobre", label: "Sobre" },
-  { href: "#stack", label: "Stack" },
+  { href: "#stack", label: "Competências" },
   { href: "#idiomas", label: "Idiomas" },
   { href: "#projetos", label: "Projetos" },
   { href: "#contato", label: "Contato" },
@@ -21,12 +21,12 @@ export function Header() {
         <Link
           className="brand"
           href="#top"
-          aria-label={`${profile.name}, inicio`}
+          aria-label={`${profile.name}, início`}
         >
           <span className="brand-name">{brandLead}</span>
           {brandTail ? <span className="brand-tail">{brandTail}</span> : null}
         </Link>
-        <nav aria-label="Navegacao principal">
+        <nav aria-label="Navegação principal">
           <ul className="nav-list">
             {navigation.map((item) => (
               <li key={item.href}>

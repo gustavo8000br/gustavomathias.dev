@@ -1,4 +1,3 @@
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
   BrainCircuit,
   Code2,
@@ -8,6 +7,7 @@ import {
   Server,
   TestTube2,
 } from "lucide-react";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 
 import { stack } from "@/content/stack";
 
@@ -33,7 +33,7 @@ export function Stack() {
           id="stack-title"
           index="03"
           label="stack"
-          title="Tecnologias e práticas que fazem parte da minha forma de construir software."
+          title="Tecnologias e práticas para entregar software confiável."
         />
 
         <div className="stack-grid">
