@@ -12,7 +12,7 @@ export function Footer() {
               {profile.name}
             </a>
           </span>{" "}
-          <br /> Código com intenção, produto com continuidade.{" "}
+          <br /> Código cuidadoso para produtos que evoluem.{" "}
         </p>
       </div>
     </footer>
