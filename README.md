@@ -13,10 +13,10 @@ atuação freelance desde 2015 (São Paulo, SP).
 
 ## Status
 
-🚧 Em configuração inicial. As decisões estruturais estão registradas em
+✅ Portfólio implementado em Next.js, com conteúdo estático versionado em
+`src/content/`. As decisões estruturais estão registradas em
 [`docs/adrs/`](./docs/adrs/) e o design system em
-[`docs/design-system.md`](./docs/design-system.md). A implementação do site
-(Next.js) vem a seguir.
+[`docs/design-system.md`](./docs/design-system.md).
 
 ## Stack pretendida
 
@@ -27,8 +27,8 @@ atuação freelance desde 2015 (São Paulo, SP).
 | Linguagem | TypeScript (strict) |
 | Estilo | Tailwind CSS v4 |
 | Lint / Format | Biome |
-| Conteúdo | Sanity (CMS headless) |
-| Renderização | SSG + ISR |
+| Conteúdo | Módulos TypeScript estáticos |
+| Renderização | SSG |
 | Deploy | Vercel |
 
 Detalhes e justificativas: [`docs/adrs/0001`](./docs/adrs/0001-framework-e-runtime.md)

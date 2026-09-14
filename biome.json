@@ -1,0 +1,50 @@
+{
+  "$schema": "https://biomejs.dev",
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "complexity": {
+        "noImportantStyles": "off"
+      },
+      "style": {
+        "noDescendingSpecificity": "off"
+      },
+      "suspicious": {
+        "noControlCharactersInRegex": "off"
+      },
+      "a11y": {
+        "useKeyWithClickEvents": "error",
+        "useMediaCaption": "off"
+      }
+    }
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!**/.claude",
+      "!**/.aiox-core",
+      "!**/.aiox",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/build",
+      "!**/.next",
+      "!**/.turbo",
+      "!**/.vercel",
+      "!**/.cache",
+      "!**/.git"
+    ]
+  }
+}
