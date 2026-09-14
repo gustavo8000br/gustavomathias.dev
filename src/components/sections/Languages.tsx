@@ -1,5 +1,5 @@
-import { languages } from "@/content/languages";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { languages } from "@/content/languages";
 
 export function Languages() {
   return (
@@ -14,7 +14,7 @@ export function Languages() {
             id="idiomas-title"
             index="04"
             label="idiomas"
-            title="Idiomas que fazem parte do meu trabalho e aprendizado."
+            title="Comunicação para colaborar, aprender e acompanhar a documentação técnica."
           />
 
           <div className="languages-list">

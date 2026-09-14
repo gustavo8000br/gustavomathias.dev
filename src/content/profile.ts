@@ -5,10 +5,9 @@ export const profile = {
   email: "contato@gustavomathias.dev",
   url: "https://github.com/gustavo8000br/gustavomathias.dev",
   role: "Desenvolvedor web Full Stack",
-  headline:
-    "Construo produtos web que continuam fazendo sentido depois do primeiro deploy.",
+  headline: "Produtos web pensados para evoluir.",
   description:
-    "Desenvolvedor web Full Stack com foco em TypeScript, JavaScript, React, Next.js e Node.js. Tenho interesse em arquitetura, qualidade e manutenção de software.",
+    "Freelancer desde 2015, desenvolvo aplicações Full Stack com TypeScript, React, Next.js e Node.js — da interface à infraestrutura.",
   location: "São Paulo, SP",
-  availability: "Disponível para conversas sobre projetos e oportunidades",
+  availability: "Disponível para projetos e oportunidades",
 } as const;

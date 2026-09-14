@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { projects } from "@/content/projects";
 import { getProjectLabel } from "@/lib/content";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export function Projects() {
   return (
@@ -11,13 +11,12 @@ export function Projects() {
           id="projetos-title"
           index="05"
           label="projetos"
-          title="Problemas reais, aprendizados que ficam."
+          title="Projetos que transformam contexto em produto."
         />
 
         <p className="section-intro">
-          Uma seleção de projetos que mostra diferentes momentos do trabalho:
-          construir do zero, retomar uma base e entregar para uma pessoa
-          cliente.
+          Projetos autorais e para clientes que evidenciam concepção, evolução
+          de sistemas existentes e entrega de experiências digitais.
         </p>
 
         <div className="projects-grid">
@@ -65,6 +64,7 @@ export function Projects() {
                     aria-label={`Visitar projeto ${project.title}`}
                     title={`Visitar projeto ${project.title} em nova aba`}
                   >
+                    <span className="project-link-text">Visitar projeto</span>
                     <span className="project-arrow" aria-hidden="true">
                       <ArrowUpRight size={18} />
                     </span>
